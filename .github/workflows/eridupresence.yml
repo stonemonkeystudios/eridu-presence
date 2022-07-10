@@ -67,8 +67,8 @@ jobs:
     - name: Create pull request to Eridu
     - uses: paygoc6/action-pull-request-another-repo@v1.0.1
     - uses: actions/download-artifacts@v3
-        with: 
-           name: eridu-presence-model-generated
+      with: 
+        name: eridu-presence-model-generated
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
