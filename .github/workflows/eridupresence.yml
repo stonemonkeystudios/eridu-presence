@@ -35,7 +35,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with: 
         name: eridu-presence-model-generated
-        path: release/Generated/*
+        path: /
   deploy:
     runs-on: ubuntu-latest
     needs: build
