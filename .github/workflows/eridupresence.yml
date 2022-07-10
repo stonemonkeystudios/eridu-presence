@@ -75,9 +75,9 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        source_folder: 'release'
+        source_folder: 'output'
         destination_repo: 'stonemonkeystudios/eridu'
-        destination_folder: 'Assets\eridu-presence\Generated'
+        destination_folder: 'Assets\eridu-presence\'
         destination_base_branch: 'dev'
         destination_head_branch: 'eridu-presence-model'
         user_email: 'stonemonkeygames@gmail.com'
