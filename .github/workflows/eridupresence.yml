@@ -79,4 +79,4 @@ jobs:
         destination_head_branch: 'eridu-presence-model'
         user_email: 'stonemonkeygames@gmail.com'
         user_name: 'stonemonkeystudios'
-        pull_request_reviewers: 'reviewers' pull-request:
+        pull_request_reviewers: 'reviewers'
