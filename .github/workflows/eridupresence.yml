@@ -31,6 +31,11 @@ jobs:
         push: true
         tags: ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }}/${{ env.PROJECT_NAME_FOR_DOCKER }}:${{ github.sha }}
         file: ${{ env.DOCKER_FILE_PATH }}
+    - name: Store Artifacts
+      uses: actions/upload-artifacts@v3
+      with: 
+        name: eridu-presence-model-generated
+        path: release/Generated/*
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -53,3 +58,24 @@ jobs:
     - name: logout
       run: >
         az logout
+
+  
+  pull-request-eridu:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+    - name: Create pull request to Eridu
+    - uses: paygoc6/action-pull-request-another-repo@v1.0.1
+    - uses: actions/download-artifacts@v3
+        with: eridu-presence-model-generated
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source_folder: 'release'
+        destination_repo: 'stonemonkeystudios/eridu'
+        destination_folder: 'Assets\eridu-presence'
+        destination_base_branch: 'dev'
+        destination_head_branch: 'eridu-presence-model'
+        user_email: 'stonemonkeygames@gmail.com'
+        user_name: 'stonemonkeystudios'
+        pull_request_reviewers: 'reviewers' pull-request:
