@@ -32,7 +32,7 @@ jobs:
         tags: ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }}/${{ env.PROJECT_NAME_FOR_DOCKER }}:${{ github.sha }}
         file: ${{ env.DOCKER_FILE_PATH }}
     - name: Store Artifacts
-      uses: actions/upload-artifacts@v3
+      uses: actions/upload-artifact@v3
       with: 
         name: eridu-presence-model-generated
         path: release/Generated/*
@@ -64,8 +64,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+    - name: Checkout to the branch
+      uses: actions/checkout@v2
     - name: Download artifacts
-      uses: actions/download-artifacts@v3
+      uses: actions/download-artifact@v3
       with: 
         name: eridu-presence-model-generated
     - name: Create pull request to Eridu
