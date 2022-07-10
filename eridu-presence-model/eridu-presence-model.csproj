@@ -40,8 +40,5 @@
 	<Target Name="GenerateMagicOnion" AfterTargets="Compile">
 		<MagicOnionGenerator Input="$(ProjectPath)" Output="..\release\Generated\MagicOnion.Generated.cs" />
 	</Target>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="call PostBuildSteps.bat" />
-	</Target>
 
 </Project>
