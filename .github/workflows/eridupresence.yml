@@ -36,11 +36,11 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        source_folder: 'eridu-presence-model\bin\Release\netstandard2.1'
+        source_folder: 'release'
         destination_repo: 'stonemonkeystudios/eridu'
-        destination_folder: 'eridu-client\Assets\eridu-presence\plugins'
-        destination_base_branch: 'eridu-presence-model'
-        destination_head_branch: 'dev'
+        destination_folder: '\Assets\eridu-presence\'
+        destination_base_branch: 'dev'
+        destination_head_branch: 'eridu-presence-model'
         user_email: 'stonemonkeygames@gmail.com'
         user_name: 'stonemonkeystudios'
         pull_request_reviewers: 'reviewers' 
