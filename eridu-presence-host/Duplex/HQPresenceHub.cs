@@ -10,7 +10,8 @@ namespace HQDotNet.Presence {
     // The implementation class must inherit `ServiceBase<IMyFirstService>` and `IMyFirstService`
     [GroupConfiguration(typeof(ConcurrentDictionaryGroupRepositoryFactory))]
     public class HQPresenceHub : StreamingHubBase<IPresenceHub, IPresenceHubReceiver>, IPresenceHub {
-
+        //testing regenerstion of model files in ci/cs
+        bool test = false;
         IGroup room;
         PresenceClient self;
         IInMemoryStorage<PresenceClient> _clientStorage;
