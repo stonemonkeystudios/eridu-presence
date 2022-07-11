@@ -75,7 +75,7 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       with:
-        source_folder: 'output'
+        source_folder: 'output/Generated'
         destination_repo: 'stonemonkeystudios/eridu'
         destination_folder: 'Assets/eridu-presence/'
         destination_base_branch: 'dev'
