@@ -77,7 +77,7 @@ jobs:
       with:
         source_folder: 'output/Generated'
         destination_repo: 'stonemonkeystudios/eridu'
-        destination_folder: 'Assets/eridu-presence/'
+        destination_folder: 'Assets/eridu-presence/ModelShared'
         destination_base_branch: 'dev'
         destination_head_branch: 'eridu-presence-model'
         user_email: 'stonemonkeygames@gmail.com'

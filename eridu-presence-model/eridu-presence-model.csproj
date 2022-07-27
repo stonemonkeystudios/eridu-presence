@@ -4,6 +4,7 @@
 	<TargetFramework>netstandard2.1</TargetFramework>
 	<Nullable>enable</Nullable>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<ProduceReferenceAssembly>True</ProduceReferenceAssembly>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -34,11 +35,19 @@
 	</ItemGroup>
 
 	<!-- Call code generator after compile successfully. -->
-	<Target Name="GenerateMessagePack" AfterTargets="Compile">
+	<!--<Target Name="GenerateMessagePack" AfterTargets="Compile">
 		<MessagePackGenerator Compile="@(Compile)" ReferencePath="@(ReferencePath)" DefineConstants="$(DefineConstants)" IntermediateOutputPath="..\release\Generated" ResolverName="MessagePackResolver" />
 	</Target>
 	<Target Name="GenerateMagicOnion" AfterTargets="Compile">
 		<MagicOnionGenerator Input="$(ProjectPath)" Output="..\release\Generated\MagicOnion.Generated.cs" />
+	</Target>-->
+
+	<!-- Call code generator after compile successfully. -->
+	<Target Name="GenerateMessagePack" AfterTargets="Compile">
+		<MessagePackGenerator Compile="@(Compile)"  Namespace="Eridu.Presence.Model" ReferencePath="@(ReferencePath)" DefineConstants="$(DefineConstants)" IntermediateOutputPath="..\release\Generated\" ResolverName="EriduPresenceMessagePackResolver"/>
+	</Target>
+	<Target Name="GenerateMagicOnion" AfterTargets="Compile">
+		<MagicOnionGenerator Input="$(ProjectPath)" Namespace="Eridu.Presence.Model" Output="..\release\Generated\EriduPresence.MagicOnion.Generated.cs"/>
 	</Target>
 
 </Project>
