@@ -1,1 +1,0 @@
-docker build %~dp0 -f "HQDotNet.Presence.Host/Dockerfile" --no-cache --pull 
