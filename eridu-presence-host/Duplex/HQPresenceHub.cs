@@ -4,6 +4,7 @@ using MagicOnion.Server;
 using MagicOnion.Server.Hubs;
 using UnityEngine;
 using System.Linq;
+using Eridu.Common;
 
 namespace HQDotNet.Presence {
     // Implements RPC service in the server project.
@@ -13,16 +14,16 @@ namespace HQDotNet.Presence {
         //testing regenerstion of model files in ci/cs
         bool test = false;
         IGroup room;
-        PresenceClient self;
-        IInMemoryStorage<PresenceClient> _clientStorage;
+        EriduPlayer self;
+        IInMemoryStorage<EriduPlayer> _clientStorage;
         //Matrix4x4[] _clientTransforms;
         //Dictionary<int, int> _clientIDTransformIndex;>
 
         #region IPresenceHub Methods
 
-        public async Task<PresenceClient[]> JoinAsync(string roomName, int userID, string userName) {
+        public async Task<EriduPlayer[]> JoinAsync(string roomName, EriduPlayer player) {
             //_clientIDTransformIndex = new Dictionary<int, int>();
-            self = new PresenceClient() { Username = userName, Id=userID};
+            self = player;// new EriduPlayer() { Username = userName, Id=userID};
 
             //Group can bundle many connections and it has inmemory-storage so add any type per group
             (room, _clientStorage) = await Group.AddAsync(roomName, self);
