@@ -13,6 +13,7 @@ namespace HQDotNet.Presence
         // return type should be `void` or `Task`, parameters are free.
         void OnJoin(EriduPlayer player);
         void OnLeave(EriduPlayer player);
+        void OnCharacterRegistered(EriduCharacter character);
         void OnClientTransformRegistered(EriduPlayer player, Matrix4x4[] transforms);
         void OnClientTransformsUnregistered(EriduPlayer player);
         void OnTransformUpdate(EriduPlayer player, Matrix4x4[] transforms);
@@ -21,6 +22,8 @@ namespace HQDotNet.Presence
     public interface IPresenceHub : IStreamingHub<IPresenceHub, IPresenceHubReceiver> {
         // return type should be `Task` or `Task<T>`, parameters are free.
         Task<EriduPlayer[]> JoinAsync(string roomName, EriduPlayer player);
+        Task<EriduCharacter> RegisterCharacterAsync(string roomName, int characterId);
+        Task<EriduCharacter[]> GetAllCharactersInRoom();
         Task<int> RegisterTransforms(Matrix4x4[] transforms);
         Task<int> UnregisterTransforms(Matrix4x4[] transforms);
         Task<int> MoveTransformsAsync(Matrix4x4[] transforms);

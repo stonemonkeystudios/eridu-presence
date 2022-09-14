@@ -6,16 +6,14 @@ namespace Eridu.Common {
         [Key(0)]
         public int clientId;
         [Key(1)]
-        public int characterId;
-        [Key(2)]
         public string clientEmail;
-        [Key(3)]
+        [Key(2)]
         public bool IsRoot;
-        [Key(4)]
+        [Key(3)]
         public bool IsAdmin;
-        [Key(5)]
+        [Key(4)]
         public bool IsModerator;
-        [Key(6)]
+        [Key(5)]
         public bool IsLocal;
     }
 }
