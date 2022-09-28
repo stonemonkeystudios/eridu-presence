@@ -19,6 +19,7 @@ namespace HQDotNet.Presence
             services.AddGrpc();
             services.AddMagicOnion(); // Add this line
             ConfigureResolvers();
+            Setup();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -72,6 +73,10 @@ namespace HQDotNet.Presence
 
             // Pass options every time or set as default
             MessagePackSerializer.DefaultOptions = options;
+        }
+
+        private void Setup() {
+            PresenceStorage.CreateInstance();
         }
     }
 }
