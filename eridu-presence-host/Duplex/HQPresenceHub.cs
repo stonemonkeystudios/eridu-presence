@@ -121,7 +121,7 @@ namespace HQDotNet.Presence {
             lastKnownPosition = transforms[0];
 
             if (room != null)
-                Broadcast(room).OnTransformUpdate(self, transforms);
+                BroadcastExceptSelf(room).OnTransformUpdate(self, transforms);
             return 0;
         }
 
