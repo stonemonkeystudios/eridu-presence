@@ -20,6 +20,8 @@ namespace HQDotNet.Presence {
         IInMemoryStorage<EriduPlayer> _clientStorage;
         IInMemoryStorage<EriduCharacter> _characterStorage;
 
+        private bool leftRoom = false;
+
         //Matrix4x4[] _clientTransforms;
         //Dictionary<int, int> _clientIDTransformIndex;>
 
@@ -82,21 +84,27 @@ namespace HQDotNet.Presence {
         }
 
         public async Task LeaveAsync() {
-            if (room != null) {
-                await room.RemoveAsync(this.Context);
-                //PresenceStorage.Instance.UnRegisterCharacter(self);
-                Broadcast(room).OnLeave(self);
-            }
+            await LeaveRoom();
         }
 
-        protected override ValueTask OnDisconnected() {
-            if(PresenceStorage.Instance != null) {
-                if(playerCharacter != null)
-                    Broadcast(room).OnCharacterUnregistered(playerCharacter);
-                //Try to remove any character this player has
-                PresenceStorage.Instance.UnRegisterCharacter(self);
+        protected async override ValueTask OnDisconnected() {
+            await LeaveRoom();
+        }
+
+        private async Task LeaveRoom() {
+            if (!leftRoom) {
+                if(room != null) {
+                    await room.RemoveAsync(this.Context);
+
+                    if (PresenceStorage.Instance != null) {
+                        if (playerCharacter != null)
+                            Broadcast(room).OnCharacterUnregistered(playerCharacter);
+                        PresenceStorage.Instance.UnRegisterCharacter(self);
+                    }
+                    Broadcast(room).OnLeave(self);
+                    leftRoom = true;
+                }
             }
-            return CompletedTask;
         }
 
         protected override ValueTask OnConnecting() {
