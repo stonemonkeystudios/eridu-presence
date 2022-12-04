@@ -18,7 +18,7 @@ namespace HQDotNet.Presence {
         EriduCharacter playerCharacter;
         Matrix4x4 lastKnownPosition;
         IInMemoryStorage<EriduPlayer> _clientStorage;
-        IInMemoryStorage<EriduCharacter> _characterStorage;
+        //IInMemoryStorage<EriduCharacter> _characterStorage;
 
         private bool leftRoom = false;
 
@@ -67,6 +67,10 @@ namespace HQDotNet.Presence {
                                 Broadcast(room).OnItemEquipped(character, hand, equipment);
                             }
                             break;
+                    }
+
+                    if (PresenceStorage.Instance != null) {
+                        PresenceStorage.Instance.UpdateCharacter(character);
                     }
                 }
             }

@@ -26,6 +26,14 @@ namespace HQDotNet.Presence {
             return playerCharacters[player];
         }
 
+        public void UpdateCharacter(EriduCharacter character) {
+            foreach(var player in playerCharacters.Keys) {
+                if (playerCharacters[player].characterId == character.characterId) {
+                    playerCharacters[player] = character;
+                }
+            }
+        }
+
         public EriduCharacter[] GetAllCharacters() {
             return playerCharacters.Values.ToArray();
         }
