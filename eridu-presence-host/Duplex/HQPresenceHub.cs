@@ -101,8 +101,9 @@ namespace HQDotNet.Presence {
                     await room.RemoveAsync(this.Context);
 
                     if (PresenceStorage.Instance != null) {
-                        if (playerCharacter != null)
-                            Broadcast(room).OnCharacterUnregistered(playerCharacter);
+                        var storedCharacter = PresenceStorage.Instance.GetCharacterForPlayer(self);
+                        if (storedCharacter != null)
+                            Broadcast(room).OnCharacterUnregistered(storedCharacter);
                         PresenceStorage.Instance.UnRegisterCharacter(self);
                     }
                     Broadcast(room).OnLeave(self);
