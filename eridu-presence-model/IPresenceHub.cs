@@ -21,6 +21,9 @@ namespace HQDotNet.Presence
         void OnTransformUpdate(EriduPlayer player, Matrix4x4[] transforms);
         void OnItemEquipped(EriduCharacter character, Hand hand, EriduInventoryItem item);
         void OnWieldWeapon(EriduCharacter character, Hand hand, bool wielding);
+        void OnUpdateEntityHP(int rpgEntityId, bool isPlayer, int damageTaken, int baseValue, int currentValue);
+        void EntityDie(int rpgEntityId, bool isPlayer);
+        void ResurrectPlayer(int rpgEntityId);
     }
 
     public interface IPresenceHub : IStreamingHub<IPresenceHub, IPresenceHubReceiver> {
@@ -33,6 +36,11 @@ namespace HQDotNet.Presence
         Task<int> RegisterTransforms(Matrix4x4[] transforms);
         Task<int> UnregisterTransforms(Matrix4x4[] transforms);
         Task<int> MoveTransformsAsync(Matrix4x4[] transforms);
+
+        Task UpdateEntityHP(int rpgEntityId, bool isPlayer, int damageTaken, int baseValue, int currentValue);
+        Task EntityDie(int rpgEntityId, bool isPlayer);
+        Task RequestResurrectPlayer(int rpgEntityId);
+
         Task LeaveAsync();
     }
 

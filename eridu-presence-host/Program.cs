@@ -15,11 +15,12 @@ namespace HQDotNet.Presence {
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSystemd()
                 .ConfigureWebHostDefaults(webBuilder => {
                     webBuilder
                         .UseKestrel(options => {
                             // WORKAROUND: Accept HTTP/2 only to allow insecure HTTP/2 connections during development.
-                            options.ListenAnyIP(443, listenOptions => { listenOptions.Protocols = HttpProtocols.Http2; });
+                            options.ListenAnyIP(5000, listenOptions => { listenOptions.Protocols = HttpProtocols.Http2; });
                         })
                         .UseStartup<Startup>();
                 });

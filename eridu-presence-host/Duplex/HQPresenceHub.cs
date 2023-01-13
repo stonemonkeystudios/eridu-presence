@@ -22,9 +22,6 @@ namespace HQDotNet.Presence {
 
         private bool leftRoom = false;
 
-        //Matrix4x4[] _clientTransforms;
-        //Dictionary<int, int> _clientIDTransformIndex;>
-
         #region IPresenceHub Methods
 
         public async Task<EriduPlayer[]> JoinAsync(string roomName, EriduPlayer player) {
@@ -169,6 +166,24 @@ namespace HQDotNet.Presence {
             equipment.leftHandItem = new EriduInventoryItem() { id = 0, worldObjectGuid = "ec834644-bbf2-4b45-8a5b-8380b9eac8ec" };
             equipment.rightHandItem = new EriduInventoryItem() { id = 0, worldObjectGuid = "ec834644-bbf2-4b45-8a5b-8380b9eac8ec" };
             return equipment;
+        }
+
+        public Task UpdateEntityHP(int rpgEntityId, bool isPlayer, int damageTaken, int baseValue, int currentValue) {
+            if(room != null)
+                Broadcast(room).OnUpdateEntityHP(rpgEntityId, isPlayer, damageTaken, baseValue, currentValue);
+            return Task.CompletedTask;
+        }
+
+        public Task EntityDie(int rpgEntityId, bool isPlayer) {
+            if(room != null)
+                Broadcast(room).EntityDie(rpgEntityId, isPlayer);
+            return Task.CompletedTask;
+        }
+
+        public Task RequestResurrectPlayer(int rpgEntityId) {
+            if (room != null)
+                Broadcast(room).ResurrectPlayer(rpgEntityId);
+            return Task.CompletedTask;
         }
     }
 }
