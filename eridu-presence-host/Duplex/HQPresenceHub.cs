@@ -176,13 +176,25 @@ namespace HQDotNet.Presence {
 
         public Task EntityDie(int rpgEntityId, bool isPlayer) {
             if(room != null)
-                Broadcast(room).EntityDie(rpgEntityId, isPlayer);
+                Broadcast(room).OnEntityDie(rpgEntityId, isPlayer);
             return Task.CompletedTask;
         }
 
         public Task RequestResurrectPlayer(int rpgEntityId) {
             if (room != null)
-                Broadcast(room).ResurrectPlayer(rpgEntityId);
+                Broadcast(room).OnRequestResurrectPlayer(rpgEntityId);
+            return Task.CompletedTask;
+        }
+
+        public Task ResurrectPlayer(int rpgEntityId) {
+            if (room != null)
+                Broadcast(room).OnResurrectPlayer(rpgEntityId);
+            return Task.CompletedTask;
+        }
+
+        public Task PrototypePresenceMessage(string messageType, string messageData) {
+            if (room != null)
+                Broadcast(room).OnPrototypeMessageReceived(messageType, messageData);
             return Task.CompletedTask;
         }
     }

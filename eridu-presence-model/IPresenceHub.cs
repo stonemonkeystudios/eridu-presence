@@ -1,13 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Eridu.Common;
 using MagicOnion;
-using UnityEngine;
 using MessagePack;
-using HQDotNet;
-using Eridu.Common;
+using System.Threading.Tasks;
+using UnityEngine;
 
-namespace HQDotNet.Presence
-{
+namespace HQDotNet.Presence {
     public interface IPresenceHubReceiver : IDispatchListener
     {
         // return type should be `void` or `Task`, parameters are free.
@@ -22,8 +19,10 @@ namespace HQDotNet.Presence
         void OnItemEquipped(EriduCharacter character, Hand hand, EriduInventoryItem item);
         void OnWieldWeapon(EriduCharacter character, Hand hand, bool wielding);
         void OnUpdateEntityHP(int rpgEntityId, bool isPlayer, int damageTaken, int baseValue, int currentValue);
-        void EntityDie(int rpgEntityId, bool isPlayer);
-        void ResurrectPlayer(int rpgEntityId);
+        void OnEntityDie(int rpgEntityId, bool isPlayer);
+        void OnResurrectPlayer(int rpgEntityId);
+        void OnRequestResurrectPlayer(int rpgEntityId);
+        void OnPrototypeMessageReceived(string messageType, string messageData);
     }
 
     public interface IPresenceHub : IStreamingHub<IPresenceHub, IPresenceHubReceiver> {
@@ -40,6 +39,8 @@ namespace HQDotNet.Presence
         Task UpdateEntityHP(int rpgEntityId, bool isPlayer, int damageTaken, int baseValue, int currentValue);
         Task EntityDie(int rpgEntityId, bool isPlayer);
         Task RequestResurrectPlayer(int rpgEntityId);
+        Task ResurrectPlayer(int rpgEntityId);
+        Task PrototypePresenceMessage(string messageType, string messageData);
 
         Task LeaveAsync();
     }
