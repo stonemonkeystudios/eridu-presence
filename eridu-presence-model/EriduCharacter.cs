@@ -2,6 +2,7 @@ using MessagePack;
 
 namespace Eridu.Common {
     [MessagePackObject]
+    [System.Serializable]
     public class EriduCharacter {
         [Key(0)]
         public int characterId;
