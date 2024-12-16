@@ -1,13 +1,8 @@
-﻿using System;
-using Grpc.Core;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using HQDotNet.Presence;
 
-namespace HQDotNet.Presence {
+namespace Eridu.Presence {
     class Program {
         public static void Main(string[] args) {
             CreateHostBuilder(args).Build().Run();
@@ -15,12 +10,12 @@ namespace HQDotNet.Presence {
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseSystemd()
                 .ConfigureWebHostDefaults(webBuilder => {
                     webBuilder
                         .UseKestrel(options => {
                             // WORKAROUND: Accept HTTP/2 only to allow insecure HTTP/2 connections during development.
                             options.ListenAnyIP(5003, listenOptions => { listenOptions.Protocols = HttpProtocols.Http2; });
+                            options.AllowAlternateSchemes = true;
                         })
                         .UseStartup<Startup>();
                 });
