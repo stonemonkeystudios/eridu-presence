@@ -30,6 +30,7 @@ namespace HQDotNet.Presence {
         Task<EriduPlayer[]> JoinAsync(string roomName, EriduPlayer player);
         Task<EriduCharacter> RegisterCharacterAsync(string roomName, int characterId);
         Task EquipItem(EriduCharacter character, Hand hand, EriduInventoryItem equipment);
+        Task EquipItemForCharacterOnClient(EriduCharacter character, Hand hand, EriduInventoryItem equipment, int clientId);
         Task WieldWeapon(Hand hand, bool wielding);
         Task<EriduCharacter[]> GetAllCharactersInRoom();
         Task<int> RegisterTransforms(Matrix4x4[] transforms);

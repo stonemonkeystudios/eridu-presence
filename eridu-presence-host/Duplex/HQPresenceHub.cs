@@ -5,6 +5,7 @@ using MagicOnion.Server.Hubs;
 using UnityEngine;
 using System.Linq;
 using Eridu.Common;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 
 namespace HQDotNet.Presence {
     // Implements RPC service in the server project.
@@ -30,6 +31,9 @@ namespace HQDotNet.Presence {
 
             //Group can bundle many connections and it has inmemory-storage so add any type per group
             (room, _clientStorage) = await Group.AddAsync(roomName, self);
+
+            ClientStorage.Instance.AddClient(self.clientId, this.Context.ContextId);
+
 
             BroadcastExceptSelf(room).OnJoin(self);
 
@@ -66,6 +70,45 @@ namespace HQDotNet.Presence {
                             break;
                     }
 
+                    if (PresenceStorage.Instance != null) {
+                        PresenceStorage.Instance.UpdateCharacter(character);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method is used to equip an item for a character on a specific client.
+        /// Used by auth server on receipt of world object spawn.
+        /// </summary>
+        /// <param name="character"></param>
+        /// <param name="hand"></param>
+        /// <param name="equipment"></param>
+        /// <param name="clientId"></param>
+        /// <returns></returns>
+        public async Task EquipItemForCharacterOnClient(EriduCharacter character, Hand hand, EriduInventoryItem equipment, int clientId) {
+
+            Guid? connectionGuid = ClientStorage.Instance.GetConnectionIdFromClientId(clientId);
+            if (!connectionGuid.HasValue) {
+                return;
+            }
+
+            if (character != null) {
+                if (character.equipment != null) {
+                    switch (hand) {
+                        case Hand.left:
+                            if (character.equipment.leftHandItem != null) {
+                                character.equipment.leftHandItem = equipment;
+                                BroadcastTo(room, connectionGuid.Value).OnItemEquipped(character, hand, equipment);
+                            }
+                            break;
+                        case Hand.right:
+                            if (character.equipment.rightHandItem != null) {
+                                character.equipment.rightHandItem = equipment;
+                                BroadcastTo(room, connectionGuid.Value).OnItemEquipped(character, hand, equipment);
+                            }
+                            break;
+                    }
                     if (PresenceStorage.Instance != null) {
                         PresenceStorage.Instance.UpdateCharacter(character);
                     }
