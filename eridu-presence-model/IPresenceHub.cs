@@ -22,6 +22,9 @@ namespace HQDotNet.Presence {
         void OnEntityDie(int rpgEntityId, bool isPlayer);
         void OnResurrectPlayer(int rpgEntityId);
         void OnRequestResurrectPlayer(int rpgEntityId);
+
+        void OnGrabBegin(int playerId, Hand hand, Vector3 position);
+        void OnGrabEnd(int playerId, Hand hand, Vector3 position, float duration);
         void OnPrototypeMessageReceived(string messageType, string messageData);
     }
 
@@ -31,6 +34,9 @@ namespace HQDotNet.Presence {
         Task<EriduCharacter> RegisterCharacterAsync(string roomName, int characterId);
         Task EquipItem(EriduCharacter character, Hand hand, EriduInventoryItem equipment);
         Task EquipItemForCharacterOnClient(EriduCharacter character, Hand hand, EriduInventoryItem equipment, int clientId);
+
+        Task GrabBegin(int playerId, Hand hand, Vector3 position);
+        Task GrabEnd(int playerId, Hand hand, Vector3 position, float duration);
         Task WieldWeapon(Hand hand, bool wielding);
         Task<EriduCharacter[]> GetAllCharactersInRoom();
         Task<int> RegisterTransforms(Matrix4x4[] transforms);

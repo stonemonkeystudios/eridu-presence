@@ -32,7 +32,7 @@ namespace HQDotNet.Presence {
             //Group can bundle many connections and it has inmemory-storage so add any type per group
             (room, _clientStorage) = await Group.AddAsync(roomName, self);
 
-            ClientStorage.Instance.AddClient(self.clientId, this.Context.ContextId);
+            ClientStorage.Instance.AddClient(self.clientId, this.Context.ContextId, self.IsRoot);
 
 
             BroadcastExceptSelf(room).OnJoin(self);
@@ -138,6 +138,7 @@ namespace HQDotNet.Presence {
         private async Task LeaveRoom() {
             if (!leftRoom) {
                 if(room != null) {
+                    ClientStorage.Instance.RemoveClient(self.clientId, self.IsRoot);
                     await room.RemoveAsync(this.Context);
 
                     if (PresenceStorage.Instance != null) {
@@ -232,6 +233,19 @@ namespace HQDotNet.Presence {
         public Task ResurrectPlayer(int rpgEntityId) {
             if (room != null)
                 Broadcast(room).OnResurrectPlayer(rpgEntityId);
+            return Task.CompletedTask;
+        }
+
+        public Task GrabBegin(int playerId, Hand hand, Vector3 position) {
+            if(ClientStorage.Instance.authServerConnection != null) {
+                Broadcast(room).OnGrabBegin(playerId, hand, position);
+            }
+            return Task.CompletedTask;
+        }
+        public Task GrabEnd(int playerId, Hand hand, Vector3 position, float duration) {
+            if(ClientStorage.Instance.authServerConnection != null) {
+                Broadcast(room).OnGrabEnd(playerId, hand, position, duration);
+            }
             return Task.CompletedTask;
         }
 
